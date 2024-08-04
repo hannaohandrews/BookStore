@@ -1,0 +1,16 @@
+# System files
+*.DS_Store
+.localized
+desktop.ini
+$RECYCLE.BIN/
+
+# Zoom files
+Zoom/
+
+# Specific folders
+babySleepApp/
+ultimate-react-course-main/
+
+# Hosts file
+hosts.txt
+
