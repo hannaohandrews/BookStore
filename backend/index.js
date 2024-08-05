@@ -1,9 +1,12 @@
-import express, { request } from "express";
+import express from "express";
 import { PORT, monogDBURL } from "./config.js";
 import mongoose from "mongoose";
 import { Book } from "./models/bookModel.js";
 
 const app = express();
+
+// Middleware function takes 3 arguemnts, request object, response object and acall back function
+// in the application's request-response cycle
 
 app.get("/", (req, res) => {
   console.log(req);
@@ -11,29 +14,12 @@ app.get("/", (req, res) => {
 });
 
 //Middleware for parsing request body
-//
+// Express serves as a routing and Middleware framework for handling the different routing of the webpage and it works between the request and response cycle
+// Middleware gets exectued after server receives the request and before it sends the response
+// Middleware is a function that has access to the request and response object
+// Middleware in ExpressJS : request hanlder that allows you to intercept and mianpulate request and responses
+// beofere they reach route handlers. They are the functions that are involked by the Express.js routing layer
 app.use(express.json());
-
-// Route for Save a new book
-app.post("/books", async (request, response) => {
-  try {
-    if (
-      !request.body.title ||
-      !request.body.author ||
-      !request.body.publishYear
-    ) {
-      return response
-        .status(400)
-        .send("Missing required fields: title, author, publishYear");
-    }
-
-    const book = await Book.create(newBook);
-    return response.status(201).send(book);
-  } catch (error) {
-    console.log("Error saving book", error.message);
-    response.status(500).send(error.message);
-  }
-});
 
 mongoose
   .connect(monogDBURL)
